@@ -21,3 +21,9 @@
     %lsrm(left)
     %lsrm(right)
 %mend;
+
+%macro dtdlm(adt,dlm);
+  %lsmake(templs,&adt)
+	%ls2dt(templs,%str(*))
+	%lsrm(templs)
+%mend;
