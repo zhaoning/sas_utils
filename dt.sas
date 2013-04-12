@@ -23,7 +23,7 @@
 %mend;
 
 %macro dtdlm(adt,dlm);
-  %lsmake(templs,&adt)
+	%lsmake(templs,&adt)
 	%ls2dt(templs,%str(*))
 	%lsrm(templs)
 %mend;
