@@ -27,3 +27,10 @@
 	%ls2dt(templs,%str(*))
 	%lsrm(templs)
 %mend;
+
+%macro dtcontain(adt,word);
+	%local retstr;
+	%lsmake(templs,&adt)
+	%lscontain(templs,&word)
+	%lsrm(templs)
+%mend;
