@@ -4,8 +4,8 @@
 ** To deal with
 ** LISTS, or `ls'
 **;
- 
- 
+
+
 %macro lsmake(lsname,adt,dlm);
     %if &dlm= %then %do;
        %let dlm=%str( );
