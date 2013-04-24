@@ -100,5 +100,15 @@
     %lsmake(&lsname,&retstr)
 %mend;
  
- 
+%macro lsfill(lsname,pattern,placeholder);
+  %if &placeholder= %then %do;	
+		%let placeholder=%str(#);
+	%end;
+	%local retstr i;
+	%do i=1 %to &&&lsname._count;
+		%let retstr=&retstr %sysfunc(tranwrd(&pattern,&placeholder,&&&lsname._&i));
+	%end;
+	&retstr
+%mend;
+
  
