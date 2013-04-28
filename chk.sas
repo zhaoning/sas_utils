@@ -13,7 +13,3 @@
 		%let retstr=N;
 	&retstr
 %mend;
-
-%let foo=q2s.account;
-%let bar=%isdsname(&foo);
-%put foo=&foo bar=&bar;
