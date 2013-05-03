@@ -1,15 +1,13 @@
 /* chk.sas */
 
 %macro isdsname(str);
-  %local rx_id match retstr;
-	%let rx_id=%sysfunc(prxparse(/^([_a-zA-Z][_a-zA-Z0-9]*\.)?[_a-zA-Z][_a-zA-Z0-9]*\s*$/));
-	%if rx_id>0 %then %do;
-		%let match=%sysfunc(prxmatch(&rx_id,&str));
-		%syscall prxfree(rx_id);
-	%end;
+	%local retstr match;
+	%let match=0;
+	%let match=%prxmatch(/^([_a-zA-Z][_a-zA-Z0-9]*\.)?[_a-zA-Z][_a-zA-Z0-9]*\s*$/,&str);
 	%if &match>0 %then
 		%let retstr=Y;
-	%else %if &match=0 %then
+	%else
 		%let retstr=N;
 	&retstr
 %mend;
+
