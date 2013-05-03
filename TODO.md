@@ -1,7 +1,3 @@
 #TODOs
 
-1. A macro that tells whether an input string is a lawful dataset name.
-
-2. A macro that extends a string to a given length by `appending' given characters to the left.
-
-3. Add a section to hold financial functions such as IRR.
+* Add a section to hold financial functions such as IRR.
