@@ -2,40 +2,44 @@
 
 /*
 Author of Macro PRXMATCH:
-  Lei Zhang
+	Lei Zhang
 	Celgene Corporation.
 	86 Morris Avenue
 	Summit, NJ 07901
 	Phone: (908) 673-9000 
 */
-%Macro PRXMATCH(Regex, Source, Action);
-	%local RegexID RtnVal;
-	%let RegexID=%sysfunc (PRXPARSE(&Regex));
-	%let RtnVal=0;
-	%if RegexID>0 %then %do;
-		%if %length(&Action)=0 %then %let Action=P;
-		%let Action=%upcase(&Action);
-		%if &Action=P %then %do;
-			%let rtnval=%sysfunc(PRXMatch(&RegexID, &Source));
+%macro prxmatch(prx, source, action);
+	%local prxid retstr;
+	%let prxid=%sysfunc(prxparse(&prx));
+	%let retstr=0;
+	%if prxid>0 %then %do;
+		%if %length(&action)=0 %then %let action=P;
+		%let action=%upcase(&action);
+		%if &action=P %then %do;
+			%let retstr=%sysfunc(prxmatch(&prxid, &source));
 		%end;
-		%else %if &Action=E %then %do;
-			%local Pos Len;
-			%let Pos=0;
-			%let Len=0;
-			%syscall PRXSUBSTR(RegexID, Source, Pos, Len);
-			%let RtnVal=;
-			%if &Pos>0 %then %do;
-				%let RtnVal=%substr(&Source, &Pos, &Len);
+		%else %if &action=E %then %do;
+			%local pos len;
+			%let pos=0;
+			%let len=0;
+			%syscall prxsubstr(prxid,source,pos,len);
+			%let retstr=;
+			%if &pos>0 %then %do;
+				%let retstr=%substr(&source,&pos,&len);
 			%end;
-			%syscall PRXFREE(RegexID);
+			%syscall prxfree(prxid);
 		%end;
 		%else %do;
-			%let RtnVal=;
-			%put Unknown action: &Action;
+			%let retstr=;
+			%put Unknown action: &action;
 			%end;
 		%end;
 	%else %do;
-		%put Errors found in the pattern: &Regex;
+		%put Errors found in the pattern: &prx;
 	%end;
-&RtnVal
-%Mend;
+&retstr
+%mend;
+
+
+
+
