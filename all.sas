@@ -1,7 +1,7 @@
 /* all.sas */
 
 proc sort data=sashelp.vextfl out=temp;
-  where substrn(fileref,1,3)='#LN' and index(lowcase(xpath),'.sas')>0;
+	where substrn(fileref,1,3)='#LN' and index(lowcase(xpath),'.sas')>0;
 	by descending fileref;
 data _null_;
 	set temp(obs=1);
