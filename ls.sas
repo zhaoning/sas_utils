@@ -22,10 +22,10 @@
     %global &lsname._count;
     %let &lsname._count=%eval(&i-1);
 %mend;
- 
+
 %macro ls2dt(lsname,dlm);
-    %if ^%eval(&&&lsname._count) %then %do;
-       %put Macro ls2dt failed because of variable &lsname._count.;
+    %if ^%symexist(&lsname._count) %then %do;
+       %put Macro lscontain failed because variable &lsname._count did not exist.;
        %return;
     %end;
     %if ^%symexist(dlm) %then %do;
@@ -49,8 +49,8 @@
 %mend;
  
 %macro lslast(lsname);
-    %if ^%eval(&&&lsname._count) %then %do;
-       %put Macro lslast failed because of variable &lsname._count.;
+    %if ^%symexist(&lsname._count) %then %do;
+       %put Macro lscontain failed because variable &lsname._count did not exist.;
        %return;
     %end;
     &&&&&lsname._&&&lsname._count
@@ -64,8 +64,8 @@
 %mend;
  
 %macro lscontain(lsname,word);
-    %if ^%eval(&&&lsname._count) %then %do;
-       %put Macro lscontain failed because of variable &lsname._count.;
+    %if ^%symexist(&lsname._count) %then %do;
+       %put Macro lscontain failed because variable &lsname._count did not exist.;
        %return;
     %end;
     %local retstr;
@@ -82,8 +82,8 @@
 %mend;
  
 %macro lssubs(lsname,lsnamesubs);
-    %if ^%eval(&&&lsname._count) %then %do;
-       %put Macro lssubs failed because of variable &lsname._count.;
+    %if ^%symexist(&lsname._count) %then %do;
+       %put Macro lscontain failed because variable &lsname._count did not exist.;
        %return;
     %end;
     %if ^%eval(&&&lsnamesubs._count) %then %do;
@@ -101,7 +101,7 @@
 %mend;
 
 %macro lsfill(lsname,pattern,placeholder);
-  %if &placeholder= %then %do;	
+	%if &placeholder= %then %do;	
 		%let placeholder=%str(#);
 	%end;
 	%local retstr i;
