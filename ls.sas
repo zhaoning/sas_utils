@@ -111,3 +111,20 @@
 	&retstr
 %mend;
 
+%macro lsmaxlength(lsname);
+	%if ^%eval(&&&lsname._count) %then %do;
+		%put Macro lsmaxlength failed because of variable &lsname._count.;
+		%return;
+	%end;
+	%local retstr;
+	%local i;
+	%local len;
+	%let retstr=0;
+	%do i=1 %to &&&lsname._count;
+		%let len=%length(&&&lsname._&i);
+		%if &len>&retstr %then
+			%let retstr=&len;
+	%end;
+	&retstr
+%mend;
+
