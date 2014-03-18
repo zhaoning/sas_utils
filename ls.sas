@@ -145,3 +145,21 @@
 	%end;
 %mend;
  
+%macro lscopy(lsname,lsnew);
+	%if ^%symexist(&lsname._count) %then %do;
+		%put Macro LSCOPY failed because of variable &lsname._count.;
+		%return;
+	%end;
+	%if ^%eval(&&&lsname._count) %then %do;
+		%put Macro LSCOPY failed because of variable &lsname._count.;
+		%return;
+	%end;
+	%lsrm(lsnew)
+	%global &lsnew._count;
+	%let &lsnew._count=&&&lsname._count;
+	%local i;
+	%do i=1 %to &&&lsname._count;
+		%global &lsnew._&i;
+		%let &lsnew._&i=&&&lsname._&i;
+	%end;
+%mend;
