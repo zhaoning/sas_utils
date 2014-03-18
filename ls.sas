@@ -57,6 +57,7 @@
 %mend;
  
 %macro lsrm(lsname);
+	%if ^%symexist(&lsname._count) %then %return;
     %do i=1 %to &&&lsname._count;
        %symdel &lsname._&i;
     %end;
