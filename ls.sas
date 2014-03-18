@@ -128,3 +128,20 @@
 	&retstr
 %mend;
 
+%macro lsprint(lsname);
+	%if ^%symexist(&lsname._count) %then %do;
+		%put Macro LSPRINT failed because of variable &lsname._count.;
+		%return;
+	%end;
+	%if ^%eval(&&&lsname._count) %then %do;
+		%put Macro LSPRINT failed because of variable &lsname._count.;
+		%return;
+	%end;
+	%local i;
+	%put LSPRINT: &lsname;
+	%put &lsname._count=&&&lsname._count;
+	%do i=1 %to &&&lsname._count;
+		%put &lsname._&i=&&&lsname._&i;
+	%end;
+%mend;
+ 
