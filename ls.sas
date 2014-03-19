@@ -24,10 +24,7 @@
 %mend;
 
 %macro ls2dt(lsname,dlm);
-    %if ^%symexist(&lsname._count) %then %do;
-       %put Macro lscontain failed because variable &lsname._count did not exist.;
-       %return;
-    %end;
+	%if %lsvalid(lsname)=false %then %return;
     %if ^%symexist(dlm) %then %do;
        %let separator=%str( );
     %end;
@@ -49,10 +46,7 @@
 %mend;
  
 %macro lslast(lsname);
-    %if ^%symexist(&lsname._count) %then %do;
-       %put Macro lscontain failed because variable &lsname._count did not exist.;
-       %return;
-    %end;
+	%if %lsvalid(lsname)=false %then %return;
     &&&&&lsname._&&&lsname._count
 %mend;
  
