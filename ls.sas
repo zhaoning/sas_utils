@@ -164,3 +164,22 @@
 		%let &lsnew._&i=&&&lsname._&i;
 	%end;
 %mend;
+
+%macro lsvalid(lsname);
+	%if ^%symexist(&lsname._count) %then %do;
+		%put LSVALID(&lsname) will return FALSE as macro variable &lsname._count does not exist.;
+		false
+		%return;
+	%end;
+	%local i;
+	%do i=1 %to &&&lsname._count;
+		%if ^%symexist(&lsname._&i) %then %do;
+			%put LSVALID(&lsname) will return FALSE as macro variable &lsname._&i does not exist.;
+			false
+			%return;
+		%end;
+	%end;
+	%put i=&i;
+	true
+%mend;
+
